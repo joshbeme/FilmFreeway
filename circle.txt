@@ -1,0 +1,5 @@
+The goal is to draw a circle using SVG, the JavaScript libraries already included in the circle.html file, and whatever accompanying code you create.
+
+Create the code necessary to produce a circle according to the input values. You can see an example of it working in circle.mp4.
+
+Please keep in mind we would like to see code with proper design and abstractions to whatever degree would be appropriate for a real production system.

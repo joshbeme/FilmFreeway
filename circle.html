@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Circle Test</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12" style="margin-bottom: 40px;">
+                <h1 class="text-center">Circle Test</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2" style="margin-bottom: 40px;">
+                <div style="height: 290px;" data-svg-container>
+                    <svg style="transform-origin: 50% 50%; transform: rotate(90deg)" id="graph" height="100%" width="100%">
+                        <!-- <circle id='shape' cx='50%' cy='50%' r='100' stroke='red' fill='none' stroke-width='30' stroke-dasharray='639' stroke-dashoffset='500'/>
+                        <circle
+                            style="transform-origin: 50% 50%; transform: rotate(50deg)"
+                        id='shape' cx='50%' cy='50%' r='100' stroke='blue' fill='none' stroke-width='30' stroke-dasharray='639' stroke-dashoffset='300'/> -->
+                    </svg>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4" style="margin-bottom: 40px;">
+                <form class="form-inline">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody id="table-body">
+                                        <tr>
+                                            <th>ANGLE</th>
+                                            <th>COLOR</th>
+                                            <th>RADIUS</th>
+                                            <th>TIME</th>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 60px;" type="text" class="form-control" data-angle="0"  value="45"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 90px;" type="text" class="form-control" data-color="0"  value="#3366cc"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 60px;" type="text" class="form-control" data-radius="0" value="100"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 70px;" type="text" class="form-control" data-time="0"   value="4000"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 60px;" type="text" class="form-control" data-angle="1"  value="40"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 90px;" type="text" class="form-control" data-color="1"  value="#dc3912"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 60px;" type="text" class="form-control" data-radius="1" value="100"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 70px;" type="text" class="form-control" data-time="1"   value="1000"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 60px;" type="text" class="form-control" data-angle="2"  value="15"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 90px;" type="text" class="form-control" data-color="2"  value="#ff9900"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 60px;" type="text" class="form-control" data-radius="2" value="100"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 70px;" type="text" class="form-control" data-time="2"   value="1000"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 60px;" type="text" class="form-control" data-angle="3"  value="65"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 90px;" type="text" class="form-control" data-color="3"  value="#109618"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 60px;" type="text" class="form-control" data-radius="3" value="100"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 70px;" type="text" class="form-control" data-time="3"   value="1000"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 60px;" type="text" class="form-control" data-angle="4"  value="55"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 90px;" type="text" class="form-control" data-color="4"  value="#990099"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 60px;" type="text" class="form-control" data-radius="4" value="100"></div></td>
+                                            <td><div class="form-group" style="margin-bottom: 0px;"><input style="width: 70px;" type="text" class="form-control" data-time="4"   value="1000"></div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 text-center">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6" style="margin-bottom: 5px;">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-info active">
+                                            <input type="radio" name="type" value="accordion" data-type autocomplete="off" checked> Accordion
+                                        </label>
+                                        <label class="btn btn-info">
+                                            <input type="radio" name="type" value="relay" data-type autocomplete="off"> Relay
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6" style="margin-bottom: 5px;">
+                                    <button type="button" class="btn btn-primary" data-launch>LAUNCH</button>
+                                    <button type="button" class="btn btn-danger" data-stop disabled>STOP</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="./ring-graph/dist/bundle.js" ></script>
+</body>
+</html>
