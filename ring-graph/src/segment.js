@@ -67,9 +67,11 @@ export default class SemiCircle {
         duration,
         specialEasing: { strokeDashoffset: "easeOutBounce" },
         start: function(){
+          //Set rotation
           selector.css('transform', `rotate(${tail * 360}deg)`)
         },
         complete: function() {
+          //Call next animation
           if(self.next)self.next.relay();
         }
       }
