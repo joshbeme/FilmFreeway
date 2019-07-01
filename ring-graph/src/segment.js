@@ -14,7 +14,6 @@ export default class SemiCircle {
     this.arcLength = null;
     this.currentArcLength = null
     this.currentArcLength = 0;
-
   }
 
 
