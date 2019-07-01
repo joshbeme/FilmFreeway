@@ -1,2 +1,2 @@
-import Circle from './src/circleContainer.js';
-new Circle(100, document.querySelector('#table-body').children);
+import Circle from './src/segmentContainer.js';
+new Circle(document.querySelector('#table-body'));

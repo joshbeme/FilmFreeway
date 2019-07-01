@@ -1,113 +1,140 @@
 export default class SemiCircle {
-  constructor(selector, config) {
-    const { angle, color, radius, time, perimeter } = config;
+  constructor(className, config) {
     this.config = config;
-    this.selector = selector;
-    this.shouldUpdate = false;
+    this.className = className;
+    this.selector = $(`.${className}`);
+    this.init();
+
     this.next = null;
     this.last = null;
   }
   init() {
-    this.setTailLength();
-    this.setSegment();
+    this.shouldUpdate = false;
+    this.angleRadian = null;
+    this.arcLength = null;
+    this.currentArcLength = null
+    this.currentArcLength = 0;
+
   }
-  setTailLength() {
+
+
+//Reset node's svg element
+  reset(){
+    this.setSegment();
+    if(this.next)this.next.reset();
+  };
+  setSegment() {
+    this.setLengths();
+   
+    const circle = this.selector
+    const {color, radius, perimeter} = this.config;
+
+    //Reset svg element
+    circle.css("transform-origin", `50% 50%`);
+    circle.css("stroke", `${color}`);
+    circle.css("r", "" + radius);
+    circle.css("stroke-dasharray", "" + perimeter);
+    circle.css("stroke-dashoffset", "" + perimeter);
+    circle.css("transform", "rotate(0deg)");
+  };
+  setLengths() {
     const perimeter = this.config.perimeter;
     let last = 0;
-    if (this.last) last = this.last.tailPosition;
+    if (this.last) last = this.last.arcLength;
     const anglePercent = this.config.angle / 360;
     const angleRadians = anglePercent * perimeter;
     this.angleRadian = angleRadians;
-    this.tailPosition = angleRadians + last;
-    this.currentTailPosition = 0;
-  }
-  setSegment() {
-    const self = this;
-    let last = 0;
-    if (this.last) last = this.last.tailPosition;
-    const rotationRadians = last / this.config.perimeter;
-    const circle = $(`.${self.selector}`);
-    console.log(circle, this.next);
-    circle.attr("transform-origin", `50% 50%`);
-    circle.attr("stroke", `${self.config.color}`);
-    if (this.next) this.next.init();
-  }
+
+    //Percentage of current segment plus all previous segments
+    this.arcLength = anglePercent + last;
+  };
+
+
+//Svg animations
   relay() {
     const self = this;
-    console.log(self.config.time);
-    const duration = this.config.time * 1;
-    $(`.${this.selector}`).animate(
-      { strokeDashoffset: self.config.perimeter - self.angleRadian },
+
+    //Length of arc to this segment
+    let tail = 0 ;
+    if(this.last)tail = this.last.arcLength;
+
+    const duration = this.config.time;
+    const selector = this.selector;
+    const endState = self.config.perimeter - self.angleRadian;
+    selector.animate(
+      { strokeDashoffset: endState },
       {
         duration,
         specialEasing: { strokeDashoffset: "easeOutBounce" },
+        start: function(){
+          selector.css('transform', `rotate(${tail * 360}deg)`)
+        },
         complete: function() {
-          self.next.animate();
+          if(self.next)self.next.relay();
         }
       }
     );
-  }
-
+  };
   accordion() {
-    console.log("accordion");
     const self = this;
-    //Get percentage rotated
-    let currentTail = 0;
-    if (this.last) currentTail = this.last.currentTailPosition;
-    // const circle = document.getElementById(this.selector);
-    // const segment = circle.getAttribute('stroke-dashoffset')
-    // const percent = (segment/this.config.perimeter) + currentTail;
-    // this.currentTailPosition = percent
-    // const rotation = lastTail/this.config.perimeter
-    //Durations
 
-    const duration = this.config.time * 1;
-    console.log(self.config.perimeter - self.angleRadian);
-    //Animation
-    $(function() {
-      $(`.${self.selector}`).animate(
-        { strokeDashoffset: self.config.perimeter - self.angleRadian },
+    const duration = this.config.time;
+    const endState = this.config.perimeter - this.angleRadian
+    $(function(){
+      self.selector.animate(
+        { strokeDashoffset: endState },
         {
           duration,
           specialEasing: { strokeDashoffset: "easeOutBounce" },
           queue: false,
           step: (now, fx) => {
+
+            //Get length of all previous nodes plus self and set new current length
             let currentTail = 0;
-            if (self.last) currentTail = self.last.currentTailPosition;
-            const segmentLength =
-              (self.config.perimeter - now) / self.config.perimeter;
+            if (self.last) currentTail = self.last.currentArcLength;
+            const segmentLength = (self.config.perimeter - now) / self.config.perimeter;
             const percent = segmentLength + currentTail;
-            self.currentTailPosition = percent;
+            self.currentArcLength = percent;
+
+            //Update next nodes rotation position due to self changing
             if (self.next) {
-              $(`.${self.next.selector}`).css(
+              self.next.selector.css(
                 "transform",
                 `rotate(${percent * 360}deg)`
               );
               self.next.updateRotation();
             }
           },
-          complete: () => (self.shouldUpdate = true)
+          //If not animating use update rotation to update rotation
+          complete: () => self.shouldUpdate = true
         }
       );
     });
     if (this.next) this.next.accordion();
-  }
+  };
+  stop(){
+    this.selector.stop();
+    if(this.next)this.next.stop();
+  };
 
-  //Update if previous node updates and not already animating
+
+//Update if previous node updates and not already animating
   updateRotation() {
     const self = this;
     if (this.shouldUpdate) {
+      
       let currentTail = 0;
-      if (this.last) currentTail = this.last.currentTailPosition;
+      if (this.last) currentTail = this.last.currentArcLength;
       const percent = this.angleRadian / this.config.perimeter + currentTail;
-      this.currentTailPosition = percent;
+      this.currentArcLength = percent;
+      //Set next nodes rotation amount
       if (this.next) {
-        $(`.${self.next.selector}`).css(
+        self.next.selector.css(
           "transform",
           `rotate(${percent * 360}deg)`
         );
         this.next.updateRotation();
       }
     }
-  }
+  };
 }
