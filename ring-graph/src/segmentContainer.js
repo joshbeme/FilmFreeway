@@ -1,5 +1,10 @@
 import Segment from "./segment";
 
+/**
+ * Container for linked list. Organizes state.
+ * 
+ * @param {Node} segmentSelectors Table body holding graph values
+ */
 
 //Implemented as a doubley linked list
 export default class Circle {
